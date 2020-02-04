@@ -18,6 +18,7 @@ package org.apache.geronimo.config.cdi;
 
 import static java.util.stream.Collectors.toList;
 
+import org.apache.geronimo.config.ConfigImpl;
 import org.apache.geronimo.config.cdi.configsource.Reloadable;
 import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -192,5 +193,9 @@ public class ConfigExtension implements Extension {
 
     static boolean isDefaultUnset(String defaultValue) {
         return ConfigProperty.UNCONFIGURED_VALUE.equals(defaultValue);
+    }
+
+    static boolean isNullByDefault(String defaultValue) {
+        return ConfigImpl.ORG_APACHE_GERONIMO_CONFIG_NULLVALUE.equals(defaultValue);
     }
 }

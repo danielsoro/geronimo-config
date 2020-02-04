@@ -48,7 +48,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class ConfigInjectionBean<T> implements Bean<T>, PassivationCapable, Defaults {
+public class ConfigInjectionBean<T> implements Bean<T>, PassivationCapable {
 
     private final static Set<Annotation> QUALIFIERS = new HashSet<>();
     static {
@@ -111,7 +111,7 @@ public class ConfigInjectionBean<T> implements Bean<T>, PassivationCapable, Defa
         final ConfigProperty configProperty = annotated.getAnnotation(ConfigProperty.class);
         final String key = getConfigKey(ip, configProperty);
         final String defaultValue = configProperty.defaultValue();
-        final boolean canBeNull = NULL_VALUE.equals(defaultValue);
+        final boolean canBeNull = ConfigExtension.isNullByDefault(defaultValue);
         return toInstance(
                 annotated.getBaseType(),
                 key,

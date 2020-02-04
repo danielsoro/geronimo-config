@@ -39,7 +39,7 @@ import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-public class ConfigurationHandler implements InvocationHandler, Defaults {
+public class ConfigurationHandler implements InvocationHandler {
     private final Config config;
     private final Map<Method, MethodMeta> methodMetas;
 
@@ -120,7 +120,7 @@ public class ConfigurationHandler implements InvocationHandler, Defaults {
             key = prefix + (annotation.name().isEmpty() ? m.getDeclaringClass().getName() + "." + m.getName() : annotation.name());
 
             final String defaultValue = annotation.defaultValue();
-            final boolean canBeNull = NULL_VALUE.equals(defaultValue);
+            final boolean canBeNull = ConfigExtension.isNullByDefault(defaultValue);
             final boolean hasDefault = !ConfigProperty.UNCONFIGURED_VALUE.equals(defaultValue) && !canBeNull;
 
             if (hasDefault) {
